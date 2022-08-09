@@ -15,21 +15,21 @@ const Entries_INITIAL_STATE: EntriesState = {
     {
       _id: uuidv4(),
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint corrupti vitae totam consectetur cupiditate, consequuntur doloremque, magni',
+        'Pendiente: Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint corrupti vitae totam consectetur cupiditate, consequuntur doloremque, magni',
       status: 'pending',
       createdAt: Date.now(),
     },
     {
       _id: uuidv4(),
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint corrupti',
+        'En progreso: Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint corrupti',
       status: 'in-progress',
       createdAt: Date.now() - 1000000,
     },
     {
       _id: uuidv4(),
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint corrupti vitae totam consectetur',
+        'Terminada: Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint corrupti vitae totam consectetur',
       status: 'finished',
       createdAt: Date.now() - 100000,
     },
