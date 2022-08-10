@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { Entry } from '../../interfaces';
 import { EntriesContext, entriesReducer } from './';
+import { NewEntry } from '../../components/ui/NewEntry';
 
 export interface EntriesState {
   entries: Entry[];
@@ -39,10 +40,24 @@ const Entries_INITIAL_STATE: EntriesState = {
 export const EntriesProvider: FC<EntriesProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE);
 
+  const addNewEntry = (description: string) => {
+    const NewEntry: Entry = {
+      _id: uuidv4(),
+      description,
+      createdAt: Date.now(),
+      status: 'pending',
+    };
+
+    dispatch({ type: '[Entry] Add-Entry', payload: NewEntry });
+  };
+
   return (
     <EntriesContext.Provider
       value={{
         ...state,
+
+        //Methods
+        addNewEntry,
       }}
     >
       {children}
