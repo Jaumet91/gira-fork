@@ -10,5 +10,6 @@ export const getEntryById = async (id: string): Promise<IEntry | null> => {
   const entry = await Entry.findById(id).lean();
   await db.disconnect();
 
-  return entry; // no funciona por la seralizacion
+  return JSON.parse(JSON.stringify(entry));
+  //return entry; no funciona por la seralizacion
 };
