@@ -48,6 +48,14 @@ export const EntriesProvider: FC<EntriesProviderProps> = ({ children }) => {
     dispatch({ type: '[Entry] Refresh-Data', payload: data });
   };
 
+  const getEntry = async (entry: Entry) => {
+    try {
+      const { data } = await entriesApi.get<Entry>(`/entries/${entry._id}`);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
   useEffect(() => {
     refreshEntries();
   }, []);
