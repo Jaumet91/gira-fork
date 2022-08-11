@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 import {
   capitalize,
   Button,
@@ -28,6 +28,11 @@ export const EntryPage = () => {
   const [status, setStatus] = useState<EntryStatus>('pending');
   const [touched, setTouched] = useState(false);
 
+  const isNotValid = useMemo(
+    () => inputValue.length <= 0 && touched,
+    [inputValue, touched],
+  );
+
   const onTextFieldChanged = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
@@ -35,6 +40,8 @@ export const EntryPage = () => {
   const onStatusChanged = (event: ChangeEvent<HTMLInputElement>) => {
     setStatus(event.target.value as EntryStatus);
   };
+
+  const onSave = () => {};
 
   return (
     <Layout title="">
@@ -54,7 +61,10 @@ export const EntryPage = () => {
                 multiline
                 label="Nueva entrada"
                 value={inputValue}
+                onBlur={() => setTouched(true)}
                 onChange={onTextFieldChanged}
+                helperText={isNotValid && 'Ingrese un valor'}
+                error={isNotValid && touched}
               />
               <FormControl>
                 <FormLabel>Estado:</FormLabel>
@@ -75,6 +85,8 @@ export const EntryPage = () => {
                 startIcon={<SaveOutlinedIcon />}
                 variant="contained"
                 fullWidth
+                onClick={onSave}
+                disabled={inputValue.length <= 0}
               >
                 Save
               </Button>
