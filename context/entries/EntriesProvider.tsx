@@ -28,8 +28,17 @@ export const EntriesProvider: FC<EntriesProviderProps> = ({ children }) => {
     //     status: 'pending',
   };
 
-  const updateEntry = (entry: Entry) => {
-    dispatch({ type: '[Entry] Entry-Updated', payload: entry });
+  const updateEntry = async (entry: Entry) => {
+    try {
+      const { data } = await entriesApi.put<Entry>(`/entries/${entry._id}`, {
+        description: entry.description,
+        status: entry.status,
+      });
+
+      dispatch({ type: '[Entry] Entry-Updated', payload: data });
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   // Si quisieramos mandar esta funcion como dependencia en el effect
