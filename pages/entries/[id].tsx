@@ -19,14 +19,15 @@ import {
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
+import { dbEntries } from '../../database';
 import { Layout } from '../../components/layouts';
-import { EntryStatus } from '../../interfaces';
-import { isValidObjectId } from 'mongoose';
-import { useRouter } from 'next/router';
+import { EntryStatus, Entry } from '../../interfaces';
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
 
-interface Props {}
+interface Props {
+  entry: Entry;
+}
 
 export const EntryPage: FC = (props) => {
   const [inputValue, setInputValue] = useState('');
@@ -119,7 +120,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   // console.log(ctx.params);
   const { id } = params as { id: string };
 
-  if (!isValidObjectId(id)) {
+  const entry = await dbEntries.getEntryById(id);
+
+  if (!entry) {
     return {
       redirect: {
         destination: '/',
@@ -130,7 +133,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   return {
     props: {
-      id,
+      entry,
     },
   };
 };
